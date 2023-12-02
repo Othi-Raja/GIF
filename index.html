@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Happy Birthday To You">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown</title>
+
+</head>
+<body>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <div class="loader">
+    <dotlottie-player src="https://lottie.host/851516d2-b3e8-46d9-a413-4bdefcccb82f/uk2yjyg5Fd.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+  </div>
+
+  <div id="your-element-selector">
+    <div id="countdown" class="container w3-display-middle">5</div>
+  </div>
+
+  <div class="ani">
+    <dotlottie-player src="https://lottie.host/110f11d0-c015-4737-a00c-b3cb5fa1f724/frgREdG7We.json" background="transparent" speed="1" style="width: 100%; height: 100%;" loop autoplay></dotlottie-player>
+    <!-- <dotlottie-player src="https://lottie.host/ac4248a5-0a93-471d-986d-0b4382bb4d66/uhcEhbbfeD.json" background="transparent" speed="1" style="width: 100%; height: 100%;" loop autoplay></dotlottie-player> -->
+  </div>
+
+  <div id="warning-message">Warning: This experience is designed for mobile devices. Please switch to a mobile device for optimal viewing.</div>
+  <style>
+    body {
+      text-align: center;
+      font-size: 24px;
+      margin: 0px;
+      padding:0;
+      overflow: hidden; /* Hide scroll bars during the loader */
+    }
+    #countdown {
+      font-size: 6rem;
+      color: rgb(255, 255, 255);
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .ani {
+      position: absolute;
+      display: none;
+      width: 100%;
+      height: 100vh;
+    }
+    #your-element-selector {
+      width: 100%;
+      height: 100vh;
+    }
+    #warning-message {
+      display: none;
+      color: red;
+      font-size: 20px;
+    }
+    .font {
+      position: absolute;
+    }
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.trunk.min.js"></script>
+  <script src="p5.min.js"></script>
+  <script src="vanta.trunk.min.js"></script> 
+  <script>
+    // JavaScript for the countdown
+    var countdownElement = document.getElementById('countdown');
+    var yourElementSelector = document.getElementById('your-element-selector');
+    var aniElement = document.querySelector('.ani');
+    var warningMessage = document.getElementById('warning-message');
+    var loaderElement = document.querySelector('.loader');
+    var count = 5;
+
+    function updateCountdown() {
+      countdownElement.textContent = count;
+      count--;
+
+      if (count < 0) {
+        aniElement.style.display = 'block';
+        yourElementSelector.style.display = 'none';
+        countdownElement.style.display = 'none';
+        warningMessage.style.display = 'none';
+        loaderElement.style.display = 'none';
+        // Show the ani class
+      } else {
+        setTimeout(updateCountdown, 1500); // Update every second (1500 milliseconds)
+      }
+    }
+
+    function checkWindowSize() {
+      if (window.innerWidth > 668) {
+        yourElementSelector.style.display = 'none';
+        countdownElement.style.display = 'none';
+        warningMessage.style.display = 'block';
+        loaderElement.style.display = 'none';
+      } else {
+        updateCountdown();
+        VANTA.TRUNK({
+          el: "#your-element-selector",
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          scale: 1.00,
+          scaleMobile: 1.00,
+          spacing: 2.00,
+          chaos: 10.00
+        });
+        loaderElement.style.display = 'none';
+      }
+    }
+
+    // Check window size on page load and resize
+    window.addEventListener('load', function() {
+      loaderElement.style.display = 'flex'; // Display loader on page load
+      checkWindowSize();
+      setTimeout(function() {
+        loaderElement.style.display = 'none'; // Hide loader after a delay
+        document.body.style.overflow = 'visible'; // Restore scroll bars after loader is hidden
+      }, 3000); // Set the delay time (in milliseconds)
+    });
+    window.addEventListener('resize', checkWindowSize);
+  </script>
+
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+</body>
+</html>
